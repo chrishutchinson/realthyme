@@ -1,0 +1,49 @@
+extends ../layout
+
+block content
+	div.container
+		div.btn-toolbar.pull-right
+			each button in buttons
+				a.btn.btn-primary(href='#{button.link}') 
+					i(class='fa fa-#{button.icon}')
+						|  #{button.label}
+
+		h1 #{title}
+
+		table.table.table-hover
+			thead
+				tr
+					th Name
+					th Description
+					th Type
+					th Actions
+			if polls.length > 0
+				each poll in polls
+					tr
+						td #{poll.title}
+						td #{poll.description}
+						td 
+							case poll.type
+								when 'comparative'
+									| Comparative
+
+								when 'cumulative'
+									| Cumulative
+						td 
+							div.btn-toolbar
+								a.btn.btn-success(href='/polls/#{poll.id}/vote') 
+									i.fa.fa-bar-chart-o
+										|  Vote
+								a.btn.btn-primary(href='/polls/#{poll.id}') 
+									i.fa.fa-eye
+										|  View
+								a.btn.btn-primary(href='/polls/#{poll.id}/edit') 
+									i.fa.fa-pencil
+										|  Edit
+								a.btn.btn-danger(href='/polls/#{poll.id}/delete') 
+									i.fa.fa-trash-o
+										|  Delete
+			else
+				tr
+					td(colspan='4') No polls have been created yet. 
+						a(href='/polls/create') Create one now.

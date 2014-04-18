@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	div.container
+		h1= message
+		h2= error.status
+		pre #{error.stack}
+
+		a.btn.btn-default(href='/') 
+			i.fa.fa-home
+			|  Home

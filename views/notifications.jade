@@ -1,0 +1,10 @@
+div.container
+	if messages
+		each message in messages
+			div.alert(class='alert-#{message.type}')
+				| #{message.text}
+
+	if errors
+		each error in errors
+			div.alert.alert-danger
+				| #{error.msg}

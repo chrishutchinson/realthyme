@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+	div.container
+		h1 #{title}
+		form.form-horizontal(role='form', method='post')
+			div.form-group
+				label.col-sm-2.control-label(for='formTitle') Poll Title
+				div.col-sm-10
+					input.form-control(type='text', name='title', id='formTitle', value=(poll ? poll.title : body ? body.title : ''))
+
+			div.form-group
+				label.col-sm-2.control-label(for='formDescription') Description
+				div.col-sm-10
+					textarea.form-control(name='description', id='formDescription') #{poll ? poll.description : body ? body.description : ''}
+
+			div.form-group
+				label.col-sm-2.control-label(for='formType') Type
+				div.col-sm-10
+					select.form-control(name='type', id='formType')
+						option(value='comparative', selected=((poll && poll.type === 'comparative') || (body && body.type === 'comparative'))) Comparative
+						option(value='cumulative', selected=((poll && poll.type === 'cumulative') || (body && body.type === 'cumulative'))) Cumulative
+
+			// @TODO: Allow users to add as many choices as they want
+			div.form-group
+				label.col-sm-2.control-label(for='formChoices') Choices
+				div.col-sm-2
+					input.form-control(type='text', name='choices[first]', id='formChoices', placeholder='Choice 1', value=(poll ? poll.choices['first'] : body ? body.choices['first'] : ''))
+				div.col-sm-2
+					input.form-control(type='text', name='choices[second]', placeholder='Choice 2', value=(poll ? poll.choices['second'] : body ? body.choices['second'] : ''))
+				div.col-sm-2
+					input.form-control(type='text', name='choices[third]', placeholder='Choice 3', value=(poll ? poll.choices['third'] : body ? body.choices['third'] : ''))
+
+			div.form-group
+				div.col-sm-offset-2.col-sm-2
+					button.btn.btn-default(type='submit') #{action}

@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+	div.container
+		if buttons
+			div.btn-toolbar.pull-right
+				each button in buttons
+					a.btn.btn-primary(href='#{button.link}') 
+						i(class='fa fa-#{button.icon}')
+							|  #{button.label}
+
+		if title
+			h1 #{title}
+
+		div.btn-toolbar
+			each choice in poll.choices[0]
+				button.btn.btn-primary(data-action='vote', data-poll='#{poll.id}') #{choice}

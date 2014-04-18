@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+	div.container
+		if buttons
+			div.btn-toolbar.pull-right
+				each button in buttons
+					a.btn.btn-primary(href='#{button.link}') 
+						i(class='fa fa-#{button.icon}')
+							|  #{button.label}
+
+		if title
+			h1 #{title}
+
+		if poll
+			table.table.table-hover
+				tr
+					th Name
+					td #{poll.title}
+				tr
+					th Description
+					td #{poll.description}
+				tr
+					th Type
+					td #{poll.type}
