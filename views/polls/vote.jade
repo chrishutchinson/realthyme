@@ -13,5 +13,11 @@ block content
 			h1 #{title}
 
 		div.btn-toolbar
-			each choice in poll.choices[0]
+			each choice in poll.choices
 				button.btn.btn-primary(data-action='vote', data-poll='#{poll.id}') #{choice}
+
+		canvas(id='results', width='400', height='400')
+
+		// Output the poll ID as a JS var so it can be initialised - lazy
+		script(type='text/javascript')
+			| var pollID = '#{poll.id}';

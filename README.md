@@ -15,5 +15,7 @@ I'll be honest, there's probably a bunch of mistakes in this, and things that ca
 ## Todo
 - Allow users to add multiple choices when creating a poll
 - Real time voting system (comparative = measures the +ve/-ve reaction to a choice over time in comparison to the other choices | cumulative = measures the overall +ve/-ve reaction to a choice over time)
-- Implement D3.js for charting each poll
 - Implement sockets.io for real time data pushing
+- Prevent a single user voting multiple times on one poll (or allow them to vote once every n minutes)
+- Replace chart.js
+- Prevent multiple choices sharing the same name

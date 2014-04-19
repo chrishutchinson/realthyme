@@ -45,3 +45,8 @@ exports.delete = function(req, res){
 exports.addVote = function(req, res){
 	pollController.postVote(req, res);
 }
+
+/* GET Votes for poll */
+exports.votes = function(req, res){
+	pollController.votes(req, res);
+}

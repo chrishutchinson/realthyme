@@ -25,11 +25,11 @@ block content
 			div.form-group
 				label.col-sm-2.control-label(for='formChoices') Choices
 				div.col-sm-2
-					input.form-control(type='text', name='choices[first]', id='formChoices', placeholder='Choice 1', value=(poll ? poll.choices['first'] : body ? body.choices['first'] : ''))
+					input.form-control(type='text', name='choices[]', id='formChoices', placeholder='Choice', value=(poll ? poll.choices['first'] : body ? body.choices['first'] : ''))
 				div.col-sm-2
-					input.form-control(type='text', name='choices[second]', placeholder='Choice 2', value=(poll ? poll.choices['second'] : body ? body.choices['second'] : ''))
-				div.col-sm-2
-					input.form-control(type='text', name='choices[third]', placeholder='Choice 3', value=(poll ? poll.choices['third'] : body ? body.choices['third'] : ''))
+					input.form-control(type='text', name='choices[]', placeholder='Choice', value=(poll ? poll.choices['second'] : body ? body.choices['second'] : ''))
+				div.col-sm-2(data-action='cloneField')
+					input.form-control(type='text', name='choices[]', placeholder='Choice', value=(poll ? poll.choices['third'] : body ? body.choices['third'] : ''))
 
 			div.form-group
 				div.col-sm-offset-2.col-sm-2

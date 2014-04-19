@@ -1,5 +1,4 @@
 var Poll = require('../models/Poll');
-var Vote = require('../models/Vote');
 var settings = require('../config/settings');
 var flash = require('connect-flash');
 
@@ -30,6 +29,12 @@ exports.view = function(req, res){
 			return res.render('error', {error: err});
 		}
 
+		// If this request comes from an AJAX request, we'll return JSON for the poll
+		if(req.xhr){
+			return res.json(poll);
+		}
+
+		// Otherwise, render the view
 		res.render('polls/view', {
 			poll: poll,
 			title: 'View Poll',
@@ -105,8 +110,6 @@ exports.postCreate = function(req, res, next) {
 	req.assert('title', 'Title cannot be empty').notEmpty();
 	req.assert('description', 'Description cannot be empty').notEmpty();
 	req.assert('type', 'Type cannot be empty').notEmpty();
-	req.assert(['choices', 'first'], 'First Choice cannot be empty').notEmpty();
-	req.assert(['choices', 'second'], 'Second Choice cannot be empty').notEmpty();
 
 	var errors = req.validationErrors();
 	if(errors){
@@ -117,11 +120,14 @@ exports.postCreate = function(req, res, next) {
 			errors: errors
 		});
 	}
+
+	var votes = Array.apply(null, new Array(req.body.choices.length)).map(Number.prototype.valueOf,0);
 	var poll = new Poll({
 		title: req.body.title,
 		description: req.body.description,
 		type: req.body.type,
-		choices: [req.body.choices],
+		choices: req.body.choices,
+		votes: votes,
 	});
 
 	poll.save(function(err){
@@ -157,18 +163,21 @@ exports.postVote = function(req, res, next) {
 			return res.json(err);
 		}
 
-		var vote = new Vote({
-			choice: req.body.choice,
-			poll: poll,
+		var votes = poll.votes;
+		var choices = poll.choices;
+		choices.forEach(function(choice, index){
+			if(choice === req.body.choice){
+				// Correct choice
+				votes[index]++;
+			}
 		});
 
-		vote.save(function(err){
-			// Handle errors
+		Poll.update({ _id: req.params.id }, {votes: votes}, function(err, result){
 			if(err){
 				return res.json(err);
 			}
 
-			res.json(vote);
+			return res.json(poll);
 		});
 	});
 }
