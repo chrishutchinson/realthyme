@@ -14,6 +14,7 @@ I'll be honest, there's probably a bunch of mistakes in this, and things that ca
 
 ## Tests
 Mocha is being used to handle tests.
+
 1. Install Mocha globally by running `npm install -g mocha`.
 2. Move to the tests directory `cd tests`.
 3. Run `mocha`.
